@@ -39,15 +39,7 @@ export function cli(args) {
         console.log(" 3. --input [filename/foldername](-i [filename/foldername]) : \n \t it will automatically create website for you \n \t using file that you put in command line \n \t or if you put folder name then it will automatically get all the txt files from the folder and create website for you.");
         console.log("4. --styledInput [filename/foldername] [external css link] (-s [filename/foldername] [external css link]): \n \t it will automatically generate website \n \t with beautful external css");
     } else if (options.input || options.styledInput) {
-        //Delete Dist Folder
-        fs.readdir(`./dist`, function (error, filelist) {
-            for (let num in filelist) {
-                fs.unlink(`./dist/${filelist[num]}`, (err) => {
-                    console.log(err);
-                });
-            }
-
-        });
+       
 
 
         //Get argument for input and styledInput
@@ -115,7 +107,7 @@ export function cli(args) {
     
                     for (let temp = 0; temp < dataArr.length; temp++) {
     
-                        dataTemplate += `<p>${dataArr[temp]}</p>`;
+                        dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
     
                     }
     
@@ -134,7 +126,15 @@ export function cli(args) {
                    </html>
                    `
     
-    
+     //Delete Dist Folder
+     fs.readdir(`./dist`, function (error, filelist) {
+        for (let num in filelist) {
+            fs.unlink(`./dist/${filelist[num]}`, (err) => {
+                console.log("1");
+            });
+        }
+
+    });
     
                     fs.writeFile('./dist/'.concat(TextArr[filenum], ".html"), html, function (err) {
     
@@ -197,7 +197,7 @@ export function cli(args) {
 
                 for (let temp = 0; temp < dataArr.length; temp++) {
 
-                    dataTemplate += `<p>${dataArr[temp]}</p>`;
+                    dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
 
                 }
 
