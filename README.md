@@ -11,7 +11,7 @@ This is an html generator from text file to html.
 + Suhhee Kim
 
 # Github Repo
-+ https://github.com/suhhee1011/SUHHEE_SSG_OSD-release0.1/tree/master
++ https://github.com/suhhee1011/suhheeKim_OSD_release0.1_create_ssg
 
 # Before Use You need to do
 1. Download or clone the code.<br>
