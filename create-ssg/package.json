@@ -4,7 +4,7 @@
   "description": "cli program to create html",
   "main": "src/index.js",
   "bin": {
-    "@suhhee/reate-ssg": "bin/create-ssg",
+    "@suhhee/create-ssg": "bin/create-ssg",
     "create-ssg": "bin/create-ssg"
   },
   "publishConfig": {
