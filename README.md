@@ -20,6 +20,7 @@ This is an HTML generator from the text file to HTML.
 4. Open the codes.<br>
 5. Locate yourself to where package.json is located.<br>
 6. Open cmd, type npm I, and wait for download.<br>
+7. NPM link on cmd
 
 
 # Main Features
