@@ -70,6 +70,7 @@ function createHTML(filename, TextArr, result,url) {
                     dataTemplate += markDowntoHTML(dataArr[temp]);
                 }
 
+
             }
             else if (result == "txt") {
                 for (let temp = 0; temp < dataArr.length; temp++) {
