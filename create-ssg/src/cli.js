@@ -1,6 +1,16 @@
 import arg from 'arg';
 let fs = require('fs');
 
+function markDowntoHTML(text) {
+    const htmlText = text
+        .replace(/^###### (.*$)/gim, '<h6>$1</h6>')
+        .replace(/^##### (.*$)/gim, '<h5>$1</h5>')
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        return htmlText.trim();
+    }
 
 function getArgs(rawArgs) {
     const args = arg(
@@ -45,10 +55,19 @@ function createHTML(filename, TextArr, result,url) {
             let dataArr = data.split('\n');
             let dataTemplate = "";
 
-            for (let temp = 0; temp < dataArr.length; temp++) {
+            
+            if (result == "md") {
+                for (let temp = 0; temp < dataArr.length; temp++) {
 
-                dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
+                    dataTemplate += markDowntoHTML(dataArr[temp]);
+                }
 
+            }
+            else if (result == "txt") {
+                for (let temp = 0; temp < dataArr.length; temp++) {
+
+                    dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
+                }
             }
 
             let html = `
@@ -150,7 +169,7 @@ function createHTML(filename, TextArr, result,url) {
                   
                     createHTML(filename, TextArr, result,url);
                 });
-            }else if (result == "txt") {
+            }else if (result == "txt" || result == "md") {
         let _lastDot = filename.lastIndexOf('.');
         let nameOnly = filename.substr(0, _lastDot).toString();
 
