@@ -1,7 +1,26 @@
 import arg from 'arg';
 let fs = require('fs');
+// Minsu_Lab02 - Convert Markdown to HTML tags
+function markDowntoHTML(text) {
+    const htmlText = text
+        .replace(/^###### (.*$)/gim, '<h6>$1</h6>')
+        .replace(/^##### (.*$)/gim, '<h5>$1</h5>')
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^\>> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/\*\*(.*)\*\*/gim, '<b>$1</b><br/>')
+        .replace(/\_\_(.*)\_\_/gim, '<b>$1</b><br/>')
+        .replace(/\*(.*)\*/gim, '<i>$1</i><br/>')
+        .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a><br/>")
+        .replace(/\n$/gim, '<br />')
+        .replace(/\n/gim,'<p>$1</p>')
+        return htmlText.trim();
+    }
 
-
+    //until here
 function getArgs(rawArgs) {
     const args = arg(
         {
@@ -29,14 +48,14 @@ function getArgs(rawArgs) {
 
 
 
-function createHTML(filename, TextArr, result,url) {
+function createHTML(filename, TextArr, url) {
     for (let filenum = 0; filenum < TextArr.length; filenum++) {
 
 
-        fs.readFile(TextArr.length > 1 ? './Texts/'.concat(filename, "/", TextArr[filenum], ".", result) : './Texts/'.concat(TextArr[filenum], ".", result), 'utf8', function (error, data) {
+        fs.readFile(TextArr.length > 1 ? './Texts/'.concat(filename, "/", TextArr[filenum][0], ".", TextArr[filenum][1]) : './Texts/'.concat(TextArr[filenum][0], ".", TextArr[filenum][1]), 'utf8', function (error, data) {
            
             if (error) {
-                console.log("This " + TextArr[filenum] + "." + result + " file is not exist. Please check file name");
+                console.log("This " + TextArr[filenum][0], ".", TextArr[filenum][1] + " file is not exist. Please check file name");
                 return;
             }
 
@@ -44,19 +63,32 @@ function createHTML(filename, TextArr, result,url) {
 
             let dataArr = data.split('\n');
             let dataTemplate = "";
+            
+           // Minsu_Lab02 - Md
+                if(TextArr[filenum][1]=="md"){
+                    for (let temp = 0; temp < dataArr.length; temp++) {
+            
+                    dataTemplate +=markDowntoHTML(dataArr[temp]);
+                    }
 
-            for (let temp = 0; temp < dataArr.length; temp++) {
+                }
+                //until here
+                else if(TextArr[filenum][1]=="txt"){
+                    for (let temp = 0; temp < dataArr.length; temp++) {
+            
+                    dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
+                    }
+                }
+                
 
-                dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
-
-            }
+            
 
             let html = `
             <!doctype html>
            <html lang="en">
            <head>
              <meta charset="utf-8">
-             <title>${TextArr[filenum]}</title>
+             <title>${TextArr[filenum][0]}</title>
              <link rel="stylesheet" type="text/css" href="${url}">
              <meta name="viewport" content="width=device-width, initial-scale=1">
            </head>
@@ -65,12 +97,12 @@ function createHTML(filename, TextArr, result,url) {
            </body>
            </html>
            `
-            fs.writeFile('./dist/'.concat(TextArr[filenum], ".html"), html, function (err) {
+            fs.writeFile('./dist/'.concat(TextArr[filenum][0], ".html"), html, function (err) {
 
 
                 
                 if (err) console.log(err)
-                console.log(TextArr[filenum] + ".html is created!");
+                console.log(TextArr[filenum][0] + ".html is created!");
                 
 
 
@@ -131,7 +163,7 @@ function createHTML(filename, TextArr, result,url) {
                         result = filelist[Inum].substr(_lastDot + 1, filelist[Inum].length).toString();
                         let nameOnly = filelist[Inum].substr(0, _lastDot).toString();
 
-                        TextArr[Inum] = nameOnly;
+                        TextArr.push([nameOnly,result]);
                     
                        
                         
@@ -148,14 +180,14 @@ function createHTML(filename, TextArr, result,url) {
 
                     });
                   
-                    createHTML(filename, TextArr, result,url);
+                    createHTML(filename, TextArr, url);
                 });
-            }else if (result == "txt") {
+            }else if (result == "txt"||result =="md") { // Minsu_Lab02 - add md
         let _lastDot = filename.lastIndexOf('.');
         let nameOnly = filename.substr(0, _lastDot).toString();
 
-        TextArr[0] = nameOnly;
-        createHTML(filename, TextArr, result,url);
+        TextArr[0] = [nameOnly,result];
+        createHTML(filename, TextArr,url);
 
 
     } else {

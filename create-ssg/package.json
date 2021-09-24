@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "cli program to create html",
   "main": "src/index.js",
+  "private": true,
   "bin": {
     "@suhhee/create-ssg": "bin/create-ssg",
     "create-ssg": "bin/create-ssg"
