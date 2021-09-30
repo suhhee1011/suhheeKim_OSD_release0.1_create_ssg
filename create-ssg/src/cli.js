@@ -14,8 +14,8 @@ function markDowntoHTML(text) {
         .replace(/\*\*(.*)\*\*/gim, '<b>$1</b><br/>')
         .replace(/\_\_(.*)\_\_/gim, '<b>$1</b><br/>')
         .replace(/\*(.*)\*/gim, '<i>$1</i><br/>')
-        .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a><br/>")
         .replace(/\`(.*)\`/gim, '<code>$1</code><br/>') // inline code block
+        .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a><br/>")
         .replace(/\n$/gim, '<br />')
         .replace(/\n/gim,'<p>$1</p>')
         return htmlText.trim();
