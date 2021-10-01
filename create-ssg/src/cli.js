@@ -15,7 +15,7 @@ function markDowntoHTML(text) {
         .replace(/\_\_(.*)\_\_/gim, '<b>$1</b><br/>')
         .replace(/\*(.*)\*/gim, '<i>$1</i><br/>')
         .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a><br/>")
-        .replace(/^--- (.*$)/gim, '<hr/>')//horizontal rule
+        .replace(/^( ?[-_*]){3,} ?[\t]*$/gim, '<hr/>')//horizontal rule
         .replace(/\n$/gim, '<br />')
         .replace(/\n/gim,'<p>$1</p>')
         return htmlText.trim();
