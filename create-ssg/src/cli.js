@@ -30,10 +30,12 @@ function getArgs(rawArgs) {
             '--help': Boolean,
             '--input': Boolean,
             '--StyledInput': Boolean,
+            '--config': Boolean,
             '-v': '--version',
             '-h': '--help',
             '-i': '--input',
-            '-s': '--StyledInput'
+            '-s': '--StyledInput',
+            '-c': '--config'
         },
         {
             argv: rawArgs.slice(2)
@@ -45,6 +47,7 @@ function getArgs(rawArgs) {
         help: args['--help'] || false,
         version: args['--version'] || false,
         styledInput: args['--StyledInput'] || false,
+        config: args['--config'] || false,
     };
 }
 
@@ -114,7 +117,10 @@ function createHTML(filename, TextArr, url) {
 }
 
     export function cli(args) {
+        
         let options = getArgs(args);
+       
+
 
         if (options.version) {
             console.log("Name :  Simple Text Site Generator\nVersion :  1.0");
@@ -123,22 +129,34 @@ function createHTML(filename, TextArr, url) {
             console.log(" 1. --version(-v) :\n \t it will show you application name and version");
             console.log(" 2. --help(-h) :\n \t it will give you all the instruction that you need to use this application.");
             console.log(" 3. --input [filename/foldername](-i [filename/foldername]) : \n \t it will automatically create website for you \n \t using file that you put in command line \n \t or if you put folder name then it will automatically get all the txt files from the folder and create website for you.");
-            console.log("4. --styledInput [filename/foldername] [external css link] (-s [filename/foldername] [external css link]): \n \t it will automatically generate website \n \t with beautful external css");
-        } else if (options.input || options.styledInput) {
+            console.log(" 4. --styledInput [filename/foldername] [external css link] (-s [filename/foldername] [external css link]): \n \t it will automatically generate website \n \t with beautful external css");
+            console.log(" 5. --config(-c) ssg-config.json : \n \t it ables you to specify all SSG options \n \t in a JSON formatted file");
+        } else if (options.input || options.styledInput || options.config) {
 
-
+            let jsonData;
 
             //Get argument for input and styledInput
             let filename = "";
-
+            
             let url = "../public/style.css";
             if (options.input) {
-                filename = args.slice(3).join(' ').toString()
+                filename = args.slice(3).join(' ').toString();
             }
             else if (options.styledInput) {
                 filename = args.slice(3, 4).toString();
                 url = args.slice(4);
             }
+
+            if(options.config){
+                const json = args.slice(3).join(' ').toString();
+                jsonData = require(`../${json}`);
+                filename = jsonData.input;
+                //console.log(jsonData);
+                url = jsonData.stylesheet;
+                //return;
+            }
+
+    
 
 
 
