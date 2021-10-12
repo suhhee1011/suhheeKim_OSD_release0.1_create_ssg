@@ -65,14 +65,6 @@ it will show you application name and version<br>
 
 ```
 
- 5. create-ssg --config [filename] : <br> 
-           it will take the string data for input file and stylesheet URL and run it through SSG.
-```
-  ex.
-  $ create-ssg  --config ssg-config.json
-
-```
-
 
          
          
