@@ -1,5 +1,6 @@
 
 const path = require('path');
+const readline = require('readline');
 let fs = require('fs');
 
 
@@ -24,7 +25,7 @@ function markDowntoHTML(text) {
 
     return htmlText.trim();
 }
-function HTMLForm(title, cssurl, dataTemplate) {
+function HTMLForm(title, cssurl, dataTemplate,metaData) {
     let html = `
             <!doctype html>
            <html lang="en">
@@ -32,7 +33,7 @@ function HTMLForm(title, cssurl, dataTemplate) {
              <meta charset="utf-8">
              <title>${title}</title>
              <link rel="stylesheet" type="text/css" href="${cssurl}">
-             <meta name="viewport" content="width=device-width, initial-scale=1">
+             ${metaData}
            </head>
            <body>
              ${dataTemplate}
@@ -41,7 +42,7 @@ function HTMLForm(title, cssurl, dataTemplate) {
            `;
     return html;
 }
-function writeHTMLfile(jsonOutput, html, Text) {
+async function writeHTMLfile(jsonOutput, html, Text) {
     if (typeof jsonOutput === "undefined") {
         jsonOutput = "";
     }
@@ -61,6 +62,7 @@ function writeHTMLfile(jsonOutput, html, Text) {
         });
     }
     else {
+        if(!fs.existsSync("./dist")) fs.mkdirSync("./dist");
         fs.writeFile('./dist/'.concat(Text, ".html"), html, function (err) {
             if (err) console.log(err)
             console.log(Text + ".html is created!");
@@ -76,8 +78,31 @@ function fileOrFolder(filename, TextArr, Text) {
     }
 
 }
+function createMetaData(){
 
-function readFile(filename, TextArr, Text, cssurl, jsonOutput) {
+
+    return new Promise(function(resolve){
+        var RL = readline.createInterface(process.stdin, process.stdout);
+    RL.question('Please enter a title for your site:  ',(title)=>{
+        RL.question('Please enter a description for your site: ',(description)=>{
+            RL.question('Please enter a keyword for your site: ', (keyword)=>{
+                RL.close();
+                resolve(`<meta name='title' content = "[##_${title}_##]">
+                        <meta name='Description' content = "[##_${description}_##]">
+                        <meta name='keywords' content = "${keyword}">`);
+
+            })
+        })
+       
+
+    })
+      
+    });
+    
+
+}
+
+async function readFile(filename, TextArr, Text, cssurl, jsonOutput) {
     fs.readFile(fileOrFolder(filename, TextArr, Text), 'utf8', function (error, data) {
 
         if (error) {
@@ -100,14 +125,26 @@ function readFile(filename, TextArr, Text, cssurl, jsonOutput) {
                 dataTemplate += `<p>${dataArr[temp]}</p><br/>`;
             }
         }
-        let html = HTMLForm(Text[0], cssurl, dataTemplate);
 
-        writeHTMLfile(jsonOutput, html, Text[0]);
+     let metadata;
+
+
+    createMetaData().then(
+        function(value){
+            let html = HTMLForm(Text[0], cssurl, dataTemplate, value);
+
+            writeHTMLfile(jsonOutput, html, Text[0]);
+        }
+    );
+
+     
 
     });
 }
 
-function createHTML(filename, TextArr, cssurl, jsonOutput) {
+
+
+async function createHTML(filename, TextArr, cssurl, jsonOutput) {
    
     for (let filenum = 0; filenum < TextArr.length; filenum++) {
         
