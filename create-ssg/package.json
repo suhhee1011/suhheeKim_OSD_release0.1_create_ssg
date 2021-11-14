@@ -12,9 +12,9 @@
       "access": "public"
    },
    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
       "prettier": "npx prettier --write ./src/*.js",
-      "eslint" : "npx eslint ./src/*.js"
+      "eslint" : "npx eslint ./src/*.js",
+      "test": "jest"
    },
    "keywords": [
       "cli",
