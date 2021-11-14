@@ -80,4 +80,14 @@ it will show you application name and version<br>
         "source.fixAll.eslint": true
     },
 }
- ```
+  ```
+
+ ### Testing plan Created
+
+ - test plan for convert text and md files to html file is created.
+ - end to end for all the features are created
+    - help
+    - version
+    - input
+    - json file
+    - styled input
