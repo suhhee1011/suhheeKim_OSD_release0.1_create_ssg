@@ -35,3 +35,12 @@ test("Markdown Grammar changed H2",() =>{
 test("Markdown Grammar changed H1",() =>{
     expect(markDowntoHTML("# test").toBe("<h1>test</h1>"));
 });
+test("Markdown Blockquote changed",() =>{
+    expect(markDowntoHTML("> test").toBe("<blockquote>test</blockquote>"));
+});
+test("Markdown bold changed",() =>{
+    expect(markDowntoHTML("**test**").toBe("<b>test</b></br>"));
+});
+test("Markdown italic changed",() =>{
+    expect(markDowntoHTML("*test*").toBe("<i>test</i></br>"));
+});
