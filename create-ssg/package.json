@@ -1,9 +1,8 @@
 {
-   "name": "@suhhee/create-ssg",
+   "name": "create-ssg",
    "version": "1.0.0",
    "description": "cli program to create html",
    "main": "src/index.js",
-   "private": true,
    "bin": {
       "@suhhee/create-ssg": "bin/create-ssg",
       "create-ssg": "bin/create-ssg"
@@ -12,9 +11,9 @@
       "access": "public"
    },
    "scripts": {
+      "test": "jest",
       "prettier": "npx prettier --write ./src/*.js",
-      "eslint" : "npx eslint ./src/*.js",
-      "test": "jest"
+      "eslint": "npx eslint ./src/*.js"
    },
    "keywords": [
       "cli",
@@ -26,7 +25,8 @@
       "arg": "^5.0.1",
       "esm": "^3.2.25",
       "fs": "0.0.1-security",
-      "inquirer": "^8.1.5"
+      "inquirer": "^8.1.5",
+      "jest": "^27.3.1"
    },
    "devDependencies": {
       "eslint": "^8.2.0"
