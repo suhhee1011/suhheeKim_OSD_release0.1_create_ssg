@@ -74,6 +74,7 @@ function fileOrFolder(filename, TextArr, Text) {
 }
 function createMetaData() {
    return new Promise(function (resolve) {
+      
       var RL = readline.createInterface(process.stdin, process.stdout);
       RL.question("Please enter a title for your site:  ", (title) => {
          RL.question(
