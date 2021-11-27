@@ -1,6 +1,6 @@
-// import arg from "arg";
+import arg from "arg";
 let fs = require("fs");
-const createHTML = require("./htmlCreator.js");
+const staticHTML = require("./htmlCreator.js");
 var getArgs = function (rawArgs) {
    const args = arg(
       {
@@ -109,18 +109,20 @@ var cliApplication = function (args) {
             //Delete Dist Folder
             fs.readdir("./dist", function (error, filelist) {
                for (let num in filelist) {
-                  fs.unlink(`./dist/${filelist[num]}`);
+                  fs.unlink(`./dist/${filelist[num]}`,(err=> {
+                     console.log(err);
+                  }));
                }
             });
 
-            createHTML(filename, TextArr, cssUrl, jsonOutput);
+            staticHTML.createHTML(filename, TextArr, cssUrl, jsonOutput);
          });
       } else if (result == "txt" || result == "md") {
          let _lastDot = filename.lastIndexOf(".");
          let nameOnly = filename.substr(0, _lastDot).toString();
 
          TextArr[0] = [nameOnly, result];
-         createHTML(filename, TextArr, cssUrl);
+         staticHTML.createHTML(filename, TextArr, cssUrl);
       } else {
          console.log("Wrong extension");
       }
