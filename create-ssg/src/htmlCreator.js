@@ -138,4 +138,4 @@ async function createHTML(filename, TextArr, cssurl, jsonOutput) {
       readFile(filename, TextArr, TextArr[filenum], cssurl, jsonOutput);
    }
 }
-module.exports = createHTML;
+module.exports = {createHTML,markDowntoHTML,HTMLForm};

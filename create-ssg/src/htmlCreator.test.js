@@ -1,12 +1,13 @@
-const console = require("./htmlCreator.js");
+import {markDowntoHTML,HTMLForm} from './htmlCreator';
 test("Markdown Grammar translated",() =>{
-    expect(markDowntoHTML("#### test").toBe("<h3>test</h3>"));
+    expect(html.markDowntoHTML("#### test").toBe("<h3>test</h3>"));
 });
 
 test("HTMLForm changed",() =>{
-    expect(HTMLForm("title", "sample","<p>This is for test</p>","`<meta name='title' content = '[##_title_##]'>").toBe(
+    expect(HTMLForm,() =>{
+    HTMLForm("title", "sample","<p>This is for test</p>","`<meta name='title' content = '[##_title_##]'>").toBe(
         `<!doctype html>
-       <html lang="en">
+       <html lang="en">ee
        <head>
          <meta charset="utf-8">
          <title>title</title>
@@ -19,7 +20,8 @@ test("HTMLForm changed",() =>{
        </html>
        `
 
-    ));
+    );
+});
 
 });
 

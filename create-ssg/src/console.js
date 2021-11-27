@@ -1,4 +1,4 @@
-import arg from "arg";
+// import arg from "arg";
 let fs = require("fs");
 const createHTML = require("./htmlCreator.js");
 var getArgs = function (rawArgs) {
