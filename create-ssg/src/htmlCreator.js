@@ -74,7 +74,7 @@ function fileOrFolder(filename, TextArr, Text) {
 }
 function createMetaData() {
    return new Promise(function (resolve) {
-      
+
       var RL = readline.createInterface(process.stdin, process.stdout);
       RL.question("Please enter a title for your site:  ", (title) => {
          RL.question(
@@ -139,4 +139,4 @@ async function createHTML(filename, TextArr, cssurl, jsonOutput) {
       readFile(filename, TextArr, TextArr[filenum], cssurl, jsonOutput);
    }
 }
-module.exports = {createHTML,markDowntoHTML,HTMLForm};
+module.exports = {createHTML,markDowntoHTML,HTMLForm,fileOrFolder};
